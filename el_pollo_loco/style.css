@@ -1,0 +1,409 @@
+@font-face {
+  font-family: "Boxing-Regular";
+  src: url("fonts/Boxing-Regular.woff2") format("woff2"),
+    url("fonts/Boxing-Regular.woff") format("woff"),
+    url("fonts/Boxing-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: url("img/img/5_background/background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Boxing-Regular", sans-serif;
+  height: 100svh;
+}
+
+.d-none {
+  display: none;
+}
+/* ------ Controls Dialog ------ */
+.dialog-bg {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog {
+  height: 70vh;
+  width: 50vw;
+  background-color: rgb(251, 196, 101);
+  display: flex;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 30px;
+  top: 30px;
+  cursor: pointer;
+}
+
+.controls_title {
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+  margin-top: 40px;
+}
+
+.controls_line img {
+  height: 80px;
+  width: 80px;
+}
+
+.space_icon {
+  width: 120px !important;
+}
+
+.controls_icons {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+}
+
+.controls_icons img {
+  width: 80px;
+  height: 80px;
+}
+
+.controls_icons div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.controls_line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  padding: 30px 0;
+}
+
+.controls_line span {
+  height: 80px;
+  font-size: 1.5rem;
+}
+
+/* ------ Controls Dialog End ------ */
+
+/* ------ Endgame Dialog ------ */
+
+.endgame-dialog-bg {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.endgame-dialog {
+  height: 50vh;
+  width: 50vw;
+  background-color: rgb(251, 196, 101);
+  display: flex;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-image: url("img/img/9_intro_outro_screens/game_over/oh no you lost!.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.endgame-dialog img{
+  width: 20%;
+
+}
+
+.endgame-buttons {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+}
+
+h1 {
+  font-size: 46px;
+  margin-top: 0;
+}
+
+canvas {
+  display: none;
+  background-color: black;
+  border-radius: 10px;
+}
+
+.main-menu {
+  position: absolute;
+  background: url("img/img/5_background/background.png");
+  background-position: center;
+  z-index: 9999;
+  height: 100svh;
+  width: 100svw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 60px;
+}
+
+.main-picture {
+  width: 720px;
+  height: 480px;
+  border-radius: 10px;
+}
+
+/* Menu Buttons */
+
+button {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+  user-select: none;
+  touch-action: manipulation;
+  width: 205px;
+}
+
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+    to left,
+    hsl(35, 64%, 18%) 0%,
+    hsl(39, 100%, 32%) 8%,
+    hsl(43, 84%, 36%) 92%,
+    hsl(45, 100%, 16%) 100%
+  );
+}
+
+.front {
+  font-family: "Boxing-Regular", sans-serif;
+  display: block;
+  position: relative;
+  padding: 12px 27px;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  color: black;
+  background: hsl(44, 85%, 47%);
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+button:hover {
+  filter: brightness(110%);
+}
+
+button:hover .front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+button:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+button:hover .shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+button:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Menu Buttons End */
+/*------ Settings ------*/
+.container {
+  margin-top: 30px;
+  margin-right: 60px;
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: black;
+}
+/*MUTE BUTTON*/
+.container .mute {
+  position: absolute;
+  animation: keyframes-fill 0.5s;
+}
+
+.container .voice {
+  position: absolute;
+  display: none;
+  animation: keyframes-fill 0.5s;
+}
+
+/* ------ On check event ------ */
+.container input:checked ~ .mute {
+  display: none;
+}
+
+.container input:checked ~ .voice {
+  display: block;
+}
+
+/* ------ Hide the default checkbox ------ */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+  0% {
+    transform: rotate(0deg) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(-10deg) scale(1.2);
+  }
+}
+/* MUTE BUTTON END*/
+
+/*Fullscreen Button*/
+/*------ Settings ------*/
+.fullscreen {
+  margin-left: 60px;
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: black;
+}
+
+.fullscreen .expand {
+  position: absolute;
+  animation: keyframes-fill 0.5s;
+  display: none;
+}
+
+.fullscreen .compress {
+  position: absolute;
+
+  animation: keyframes-fill 0.5s;
+}
+
+/* ------ On check event ------ */
+.fullscreen input:checked ~ .expand {
+  display: block;
+}
+
+.fullscreen input:checked ~ .compress {
+  display: none;
+}
+
+/* ------ Hide the default checkbox ------ */
+.fullscreen input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/*Fullscreen Button End*/
