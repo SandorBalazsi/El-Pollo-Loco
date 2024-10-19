@@ -10,6 +10,8 @@ class Endboss extends MovableObject {
     endBossAgro = false;
 
     dead = false;
+
+
    
 
     IMAGES_WALKING = [
@@ -91,27 +93,21 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (world.character.x >= 1850){
                 this.playAnimation(this.IMAGES_ALERT);
-                setTimeout(() => {
-                    this.moveChicken;
-
-                }, 1000);
-                
+                setInterval(() => {
+                    this.moveLeft();
+                }, 500);
+               
             } else {
-                this.playAnimation(this.IMAGES_WALKING);
+                setInterval(() => {
+                    this.playAnimation(this.IMAGES_WALKING);
+                 },200);
             }
-
-        },300);
+        }, 300);
     }; 
-
-    moveChicken = setInterval(() => {
-        this.moveLeft();
-    }, 1000/30);
-
 
 
     endBossDead(){
         clearInterval(this.moveChicken);
-        clearInterval(this.walkChicken);
         this.playAnimation(this.IMAGES_DEAD);
         this.dead = true;
     }
