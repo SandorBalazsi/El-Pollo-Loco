@@ -6,7 +6,7 @@ class EndbossHealthBar extends DrawableObject {
         'img/img/7_statusbars/2_statusbar_endboss/orange/orange40.png',
         'img/img/7_statusbars/2_statusbar_endboss/orange/orange60.png',
         'img/img/7_statusbars/2_statusbar_endboss/orange/orange80.png',
-        'img/img/7_statusbars/2_statusbar_endboss/orange/orange1000.png'
+        'img/img/7_statusbars/2_statusbar_endboss/orange/orange100.png'
     ];
 
     percentage = 100;

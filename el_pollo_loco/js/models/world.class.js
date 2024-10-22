@@ -63,14 +63,14 @@ class World {
   checkBottleCollision(){
     world.throwableObjects.forEach((bottle) => {
       this.level.enemies.forEach( (enemy) => {
-        if (bottle.isColliding(enemy) && enemy.dead == false){
-          enemy.chickenDead();
-        } else if(bottle.isColliding(level1.enemies[level1.enemies.length -1]) && level1.enemies[level1.enemies.length -1].dead == false){
-          level1.enemies[level1.enemies.length -1].hit();
+        if(bottle.isColliding(level1.enemies[level1.enemies.length -1]) && level1.enemies[level1.enemies.length -1].dead == false){
+          level1.enemies[level1.enemies.length -1].endBossHit();
           this.endBossStatusBar.setPercentage(level1.enemies[level1.enemies.length -1].energy);
+        }
+        else if (bottle.isColliding(enemy) && enemy.dead == false){
+          enemy.chickenDead();
         };
     });
-   
     });
   }
 
@@ -111,12 +111,10 @@ class World {
     this.bottleBar.setBottleNr(this.bottleBar.bottleNr);
     console.log('Bottle collected!');
     this.collectedBottle ++;
+    this.bottleBar.scale = 1;
     if (soundOn == true){
       this.collect_bottle_sound.play();
     };
-    
-
-    
   }
 
 

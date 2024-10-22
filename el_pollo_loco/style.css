@@ -22,6 +22,10 @@ body {
   height: 100svh;
 }
 
+.scaled {
+  transform: scale(1);
+}
+
 .d-none {
   display: none;
 }

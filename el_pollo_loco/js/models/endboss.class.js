@@ -8,11 +8,10 @@ class Endboss extends MovableObject {
 
     energy = 100;
     endBossAgro = false;
+    isAnimating = false;
 
     dead = false;
 
-
-   
 
     IMAGES_WALKING = [
         'img/img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -21,10 +20,7 @@ class Endboss extends MovableObject {
         'img/img/4_enemie_boss_chicken/1_walk/G4.png'
     ];
 
-    IMAGES_ALERT = [
-        'img/img/4_enemie_boss_chicken/2_alert/G5.png',
-        'img/img/4_enemie_boss_chicken/2_alert/G6.png',
-        'img/img/4_enemie_boss_chicken/2_alert/G7.png',
+    IMAGES_ALERT = [ 
         'img/img/4_enemie_boss_chicken/2_alert/G8.png',
         'img/img/4_enemie_boss_chicken/2_alert/G9.png',
         'img/img/4_enemie_boss_chicken/2_alert/G10.png',
@@ -43,17 +39,18 @@ class Endboss extends MovableObject {
     ];
 
     IMAGES_HURT = [
-        'img/img/4_enemie_boss_chicken/3_attack/G21.png',
-        'img/img/4_enemie_boss_chicken/3_attack/G22.png',
-        'img/img/4_enemie_boss_chicken/3_attack/G23.png'
+        'img/img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'img/img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'img/img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
 
     IMAGES_DEAD = [
-        'img/img/4_enemie_boss_chicken/3_attack/G24.png',
-        'img/img/4_enemie_boss_chicken/3_attack/G25.png',
-        'img/img/4_enemie_boss_chicken/3_attack/G26.png'
+        'img/img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    
     action_music = new Audio ('audio/action_music.mp3');
 
     constructor(){
@@ -64,46 +61,99 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.animate();
         this.alertEndboss();
         this.action_music.muted = true;
-        
-
     }
 
+
     alertEndboss(){
-        
+
         setInterval(() => {
-                if (world.character.x >= 1650 && soundOn == true){
-                    this.endBossAgro = true;
-                    this.action_music.muted = false;
-                    this.action_music.play();
-                    this.action_music.loop = true;
-                    background_music.muted = true;
-            } else if(soundOn == true){
+                if ((this.x - world.character.x) <= 500){
+                    if (!this.endBossAgro) {
+                        this.endBossAgro = true;
+                        this.startAnimation();
+                    } 
+            } else {
                 this.endBossAgro = false;
-                this.action_music.pause();
-                this.action_music.muted = true
-                background_music.muted = false;
-            };
+                this.isAnimating = false;
+            }       
             }, 300);
     }
 
-    animate(){
-        setInterval(() => {
-            if (world.character.x >= 1850){
-                this.playAnimation(this.IMAGES_ALERT);
-                setInterval(() => {
-                    this.moveLeft();
-                }, 500);
-               
-            } else {
-                setInterval(() => {
-                    this.playAnimation(this.IMAGES_WALKING);
-                 },200);
+
+    startAnimation(){
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+    
+        // Start the alert animation first
+        this.playAlertAnimation();
+    }
+    
+
+    playWalkingAnimation() {
+        let walkingInterval = setInterval(() => {
+            if (!this.endBossAgro) {
+                clearInterval(walkingInterval);
+                this.isAnimating = false;
+                return;
             }
-        }, 300);
-    }; 
+    
+            this.moveLeft();
+            this.playAnimation(this.IMAGES_WALKING);
+        }, 100);
+    
+        // Stop walking animation and switch back to alert after 3 seconds
+        setTimeout(() => {
+            clearInterval(walkingInterval);
+            if (this.endBossAgro) {
+                this.playAlertAnimation();
+            } else {
+                this.isAnimating = false;
+            }
+        }, 3000);
+    }
+    
+
+    playAlertAnimation() {
+        let alertInterval = setInterval(() => {
+            if (!this.endBossAgro) {
+                clearInterval(alertInterval);
+                this.isAnimating = false;
+                return;
+            }
+    
+            this.playAnimation(this.IMAGES_ALERT);
+        }, 100);
+    
+        // Switch to walking animation after 2 seconds
+        setTimeout(() => {
+            clearInterval(alertInterval);
+            if (this.endBossAgro) {
+                this.playWalkingAnimation();
+            } else {
+                this.isAnimating = false;
+            }
+        }, 2000);
+    }
+
+
+    endBossHit(){
+        this.energy -= 20;
+        if (this.energy < 0) {
+            this.energy = 0;
+            this.endBossDead();
+          }
+          else {
+            this.lastHit = new Date().getTime();
+          }
+    }
+    
+    endBossIsHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
+    }
 
 
     endBossDead(){
