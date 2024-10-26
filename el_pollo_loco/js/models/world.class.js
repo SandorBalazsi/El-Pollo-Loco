@@ -34,6 +34,7 @@ class World {
 
   run(){
     setInterval(() => {
+    this.checkMobileDevice();
     this.checkCollisions();
     this.checkCollisionWithCoin();
     this.checkCollisionWithBottle();
@@ -42,6 +43,18 @@ class World {
 
    
     }, 60);
+  }
+
+ isMobile(){
+    return navigator.maxTouchPoints > 0 && /Android|iPhone/i.test(navigator.userAgent);
+}
+
+  checkMobileDevice(){
+    if (this.isMobile()){
+      document.getElementById("icons").classList.remove('d-none');
+    } else {
+      document.getElementById("icons").classList.add('d-none');
+    }
   }
 
 
@@ -87,6 +100,8 @@ class World {
 
   collectCoin(){
     this.coinBar.coinNr ++;
+    this.coinBar.width += 10;
+
     this.coinBar.setCoinNr(this.coinBar.coinNr);
     console.log('Coin collected!');
     if (soundOn == true){
@@ -119,7 +134,7 @@ class World {
 
 
   checkThrowObjects(){
-    if (this.keyboard.D && this.collectedBottle > 0 && this.canThrow) {
+    if (this.keyboard.SPACE && this.collectedBottle > 0 && this.canThrow) {
       this.collectedBottle --;
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
       this.throwableObjects.push(bottle);

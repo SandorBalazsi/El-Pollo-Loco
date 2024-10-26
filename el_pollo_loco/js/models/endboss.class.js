@@ -50,7 +50,7 @@ class Endboss extends MovableObject {
         'img/img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
-    
+
     action_music = new Audio ('audio/action_music.mp3');
 
     constructor(){
@@ -143,8 +143,7 @@ class Endboss extends MovableObject {
         if (this.energy < 0) {
             this.energy = 0;
             this.endBossDead();
-          }
-          else {
+          } else {
             this.lastHit = new Date().getTime();
           }
     }

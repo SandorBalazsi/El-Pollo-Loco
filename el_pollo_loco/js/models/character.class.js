@@ -5,6 +5,7 @@ class Character extends MovableObject{
     y = 30;
     x = 60;
     speed = 10;
+    seconds = 15;
 
     offset = {
         top: 120,
@@ -23,6 +24,19 @@ class Character extends MovableObject{
     'img/img/2_character_pepe/1_idle/idle/I-8.png',
     'img/img/2_character_pepe/1_idle/idle/I-9.png',
     'img/img/2_character_pepe/1_idle/idle/I-10.png'
+    ];
+
+    IMAGES_SLEEPING = [
+        'img/img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
 
     IMAGES_WALKING = ['img/img/2_character_pepe/2_walk/W-21.png',
@@ -65,6 +79,7 @@ class Character extends MovableObject{
     walking_audio = new Audio('audio/walking.mp3');
     hit_audio = new Audio('audio/hit_pepe.mp3');
     jump_audio = new Audio('audio/jump.mp3');
+    sleeping_audio = new Audio ('audio/sleeping.mp3');
     
     constructor(){
         super().loadImage('img/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -73,11 +88,23 @@ class Character extends MovableObject{
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_SLEEPING);
         this.applyGravity();
         this.animate();
+        this.seconds = 15;
     }
 
+
+startCountdown(){
+    setInterval(() => {
+        if (this.seconds > 0) {
+            this.seconds--;
+        }
+    }, 1000); // Decrease every second
+}
+
     animate(){
+        this.startCountdown();
 
         setInterval(() => {
             this.walking_audio.pause();
@@ -87,6 +114,7 @@ class Character extends MovableObject{
                 if( soundOn == true){
                     this.walking_audio.play();
                 };
+                this.seconds = 15;
             }
             if (this.world.keyboard.LEFT && this.x > 0 ){
                 this.moveLeft();
@@ -94,6 +122,7 @@ class Character extends MovableObject{
                 if( soundOn == true){
                     this.walking_audio.play();
                 };
+                this.seconds = 15;
             }
   
             if(this.world.keyboard.UP && !this.isAboveGround()){
@@ -101,13 +130,16 @@ class Character extends MovableObject{
                 if( soundOn == true){
                     this.jump_audio.play();
                 };
-                
+                this.seconds = 15;
             }
           
             this.world.camera_x = -this.x + 100 ;
         }, 1000 / 60);
 
         setInterval(() => {
+            
+
+            
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 stopGame();
@@ -118,18 +150,28 @@ class Character extends MovableObject{
                 if( soundOn == true){
                      this.hit_audio.play();
                 };
+                this.seconds = 15;
             }
 
             else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround()){
                 this.playAnimation(this.IMAGES_WALKING);
+                this.seconds = 15;
             }
 
             else if(this.isAboveGround()){
                 this.playAnimation(this.IMAGES_JUMPING);
+                this.seconds = 15;
             }
 
             else{
-                this.playAnimation(this.IMAGES_STANDING);
+                if (this.seconds <= 0){
+                    this.playAnimation(this.IMAGES_SLEEPING);
+                    if( soundOn == true){
+                        this.sleeping_audio.play();
+                   };
+                } else {
+                    this.playAnimation(this.IMAGES_STANDING);
+                }
             }
             
             },200);      
