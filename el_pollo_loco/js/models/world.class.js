@@ -52,8 +52,10 @@ class World {
   checkMobileDevice(){
     if (this.isMobile()){
       document.getElementById("icons").classList.remove('d-none');
+      document.getElementById("menu_icons").classList.add('d-none');
     } else {
       document.getElementById("icons").classList.add('d-none');
+      document.getElementById("menu_icons").classList.remove('d-none');
     }
   }
 

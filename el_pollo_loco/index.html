@@ -29,14 +29,32 @@
     <script src="js/game.js"></script>
     <title>EL-Pollo-Loco</title>
 </head>
-<body>
+<body onload="checkMobileDevice()">
     <div class="main-menu">
-    <img class="logo" src="img/img/10_logos_icons/logo.png" alt="">
-    <h1>El Pollo Loco</h1>
-    <div id="fullscreen" class="canvas-overlay" width="720" height="480">
+    <img id="logo" class="logo" src="img/img/10_logos_icons/logo.png" alt="">
+    <h1 id="title">El Pollo Loco</h1>
+    <div id="fullscreen" class="canvas-overlay">
+      <div id="menu_icons" class="menu_icons d-none">
+        <img class="fscreen_menu_fscreen" src="img/img/10_logos_icons/fullscreen-mobile.png" alt="">
+        <img class="fscreen_menu_mute" src="img/img/10_logos_icons/mute-mobile.png" alt="">
+        <div class="fscreen_start" onclick="startGame()">
+          <img src="img/img/10_logos_icons/menu_start.png" alt="">
+          <span>Start</span>
+        </div>
+        <div class="fscreen_options" onclick="showControls()">
+          <img src="img/img/10_logos_icons/menu_options.png" alt="">
+          <span>Options</span>
+        </div>
+        <div class="fscreen_credits">
+          <img src="img/img/10_logos_icons/menu_credits.png" alt="">
+          <span>Credits</span>
+        </div>
+      </div>
     <div id="icons" class="icons d-none">
       <img class="mobile_home" src="img/img/10_logos_icons/home.png" alt="">
       <img class="mobile_controls" src="img/img/10_logos_icons/small_controls.png" alt="">
+     <img class="mobile_fullscreen" src="img/img/10_logos_icons/fullscreen-mobile.png" alt="">
+     <img class="mobile_mute" src="img/img/10_logos_icons/mute-mobile.png" alt="">
       <img src="img/img/10_logos_icons/left.png" alt="" class="left">
       <img src="img/img/10_logos_icons/right.png" alt="" class="right">
       <img src="img/img/10_logos_icons/jump.png" alt="" class="jump">
@@ -93,7 +111,7 @@
       </div>
       </div>
     </div>
-    <div class="buttons">
+    <div id="main_menu_buttons" class="buttons">
         
       <button id="pause_game" class="d-none">
         <span class="shadow"></span>
@@ -124,7 +142,7 @@
               </button>
     
     </div>
-    <div>
+    <div id="main_menu_mute">
         <label class="container">
             <input checked="checked" type="checkbox">
               <svg onclick="mute();" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="mute"><path d="M301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3zM425 167l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"></path></svg>

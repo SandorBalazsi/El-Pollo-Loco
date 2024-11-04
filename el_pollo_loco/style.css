@@ -20,6 +20,8 @@ body {
   background-size: cover;
   font-family: "Boxing-Regular", sans-serif;
   height: 100svh;
+  overflow: hidden;
+  
 }
 
 .scaled {
@@ -218,6 +220,63 @@ canvas {
   position: relative;
 }
 
+.menu_icons div{
+  position: absolute;
+  border: 3px black solid;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 20px 5px 20px;
+  width: calc((100% / 3) - 65px);
+}
+
+.menu_icons div:active{
+  scale: 1.2;
+}
+
+.menu_icons img{
+  width: 35px;
+  height: 35px;
+}
+
+.menu_icons span{
+  position: absolute;
+  left: 40%;
+}
+
+.fscreen_start{
+  bottom: 10px;
+  left: 7px;
+}
+
+.fscreen_options{
+  bottom: 10px;
+  left: calc((100% / 3) + 7px);
+}
+
+.fscreen_credits{
+  bottom: 10px;
+  left: calc(((100% / 3) * 2) + 7px);
+}
+
+.fscreen_menu_fscreen{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.fscreen_menu_mute{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.fscreen_menu_fscreen:active, .fscreen_menu_mute:active{
+  width: 40px;
+  height: 40px;
+}
+
 .icons img{
   position: absolute;
   width: 50px;
@@ -247,6 +306,16 @@ canvas {
 .mobile_controls{
   top: 20px;
   right: 20px;
+}
+
+.mobile_mute{
+  top: 80px;
+  right: 20px;
+}
+
+.mobile_fullscreen{
+top: 140px;
+right: 20px;
 }
 
 .throw {
@@ -393,22 +462,23 @@ button:focus:not(:focus-visible) {
 /*MUTE BUTTON*/
 .container .mute {
   position: absolute;
-  display: none;
+  
   animation: keyframes-fill 0.5s;
 }
 
 .container .voice {
   position: absolute;
+  display: none;
   animation: keyframes-fill 0.5s;
 }
 
 /* ------ On check event ------ */
 .container input:checked ~ .voice {
-  display: none;
+  display: block;
 }
 
 .container input:checked ~ .mute {
-  display: block;
+  display: none;
 }
 
 /* ------ Hide the default checkbox ------ */
@@ -499,11 +569,78 @@ button:focus:not(:focus-visible) {
   canvas {
     width: 100%;
   }
+
+  .canvas-overlay {
+    width: 100%;
+  }
+
+  .main-picture {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-height: 480px) {
   canvas {
     height: 100svh;
   }
+
+  .canvas-overlay {
+    height: 100svh;
+  }
+
+  .main-picture {
+    height: 100svh;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+
+  .dialog{
+    width: 50vw;
+    height: 80vh;
+  }
+
+  .close{
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    top: 10px;
+  }
+
+  .controls_title h1{
+    font-size: 35px;
+  }
+
+  .controls{
+    margin-top: unset;
+  }
+
+  .controls_icons{
+    padding: 30px 25px;
+    gap: 10px;
+  }
+
+  .controls_icons img{
+    width: 30px;
+    height: 30px;
+  }
+
+  .space_icon{
+    height: 56px !important;
+    width: 100px !important;
+  }
+
+  .controls_line{
+    gap: 16px;
+    padding: unset;
+  }
+
+  .controls_line span{
+    height: 30px; 
+    font-size: 1rem;
+  }
+
+
+
 }
 

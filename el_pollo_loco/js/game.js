@@ -2,7 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard;
 let background_music = new Audio('audio/background_music.mp3');
-soundOn = true;
+soundOn = false;
 
 
 function init() {
@@ -25,6 +25,24 @@ window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
 function isMobile(){
     return navigator.maxTouchPoints > 0 && /Android|iPhone/i.test(navigator.userAgent);
 }
+
+function checkMobileDevice(){
+    if (this.isMobile()){
+      document.getElementById("menu_icons").classList.remove('d-none');
+      document.getElementById("logo").classList.add("d-none");
+      document.getElementById("title").classList.add('d-none');
+      document.getElementById("main_menu_buttons").style.display = "none";
+      document.getElementById("main_menu_mute").classList.add('d-none');
+    } else {
+        document.getElementById("menu_icons").classList.add('d-none');
+        document.getElementById("title").classList.remove('d-none')
+        document.getElementById("logo").classList.remove('d-none');;
+        document.getElementById("main_menu_buttons").style.display = "block";
+        document.getElementById("main_menu_mute").classList.remove('d-none');
+    }
+  }
+
+
 
 
 window.addEventListener('keydown', (e) =>{
@@ -90,7 +108,7 @@ function startGame(){
     document.getElementById("pause_game").classList.remove("d-none");
     initLevel();
     init();
-    startMusic();
+    
 }
 
 function restartGame(){
