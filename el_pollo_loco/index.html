@@ -51,14 +51,14 @@
         </div>
       </div>
     <div id="icons" class="icons d-none">
-      <img class="mobile_home" src="img/img/10_logos_icons/home.png" alt="">
-      <img class="mobile_controls" src="img/img/10_logos_icons/small_controls.png" alt="">
+      <img id="homeButton" class="mobile_home" src="img/img/10_logos_icons/home.png" alt="">
+      <img class="mobile_controls" src="img/img/10_logos_icons/small_controls.png" alt="" onclick="showControls()">
      <img class="mobile_fullscreen" src="img/img/10_logos_icons/fullscreen-mobile.png" alt="">
      <img class="mobile_mute" src="img/img/10_logos_icons/mute-mobile.png" alt="">
-      <img src="img/img/10_logos_icons/left.png" alt="" class="left">
-      <img src="img/img/10_logos_icons/right.png" alt="" class="right">
-      <img src="img/img/10_logos_icons/jump.png" alt="" class="jump">
-      <img src="img/img/10_logos_icons/throw.png" alt="" class="throw">
+      <img id="mobileLeft" src="img/img/10_logos_icons/left.png" alt="" class="left">
+      <img id="mobileRight" src="img/img/10_logos_icons/right.png" alt="" class="right">
+      <img id="mobileJump" src="img/img/10_logos_icons/jump.png" alt="" class="jump">
+      <img id="mobileThrow" src="img/img/10_logos_icons/throw.png" alt="" class="throw">
     </div>
     <img id="main_picture" class="main-picture" src="img/img/9_intro_outro_screens/start/startscreen_2.png" alt="">
 
@@ -113,17 +113,17 @@
     </div>
     <div id="main_menu_buttons" class="buttons">
         
-      <button id="pause_game" class="d-none">
+      <button id="pause_game" class="d-none" onclick="returnToMainMenu()">
         <span class="shadow"></span>
         <span class="edge"></span>
-        <span class="front text"> Pause
+        <span class="front text"> Main Menu
         </span>
       </button>
 
             <button id="start_game" onclick="startGame()">
                 <span class="shadow"></span>
                 <span class="edge"></span>
-                <span class="front text"> Start Game
+                <span class="front text"> New Game
                 </span>
               </button>
        

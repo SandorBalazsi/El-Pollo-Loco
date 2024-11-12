@@ -4,6 +4,9 @@ let keyboard = new Keyboard;
 let background_music = new Audio('audio/background_music.mp3');
 soundOn = false;
 
+function returnToMainMenu(){
+    window.location.href = 'index.html';
+}
 
 function init() {
 
@@ -11,6 +14,10 @@ function init() {
     world = new World(canvas, keyboard, level1);
 
 }
+
+screen.orientation.addEventListener("change", () => {
+    checkMobileDevice();
+})
 
 window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
     let portrait = e.matches;
@@ -41,6 +48,45 @@ function checkMobileDevice(){
         document.getElementById("main_menu_mute").classList.remove('d-none');
     }
   }
+
+document.addEventListener('DOMContentLoaded', () => {
+    let mobileLeft = document.getElementById("mobileLeft");
+    let mobileRight = document.getElementById("mobileRight");
+    let mobileJump = document.getElementById('mobileJump');
+    let mobileThrow = document.getElementById("mobileThrow");
+    let homeButton = document.getElementById("homeButton");
+
+    homeButton.addEventListener('click', () => {
+        returnToMainMenu();
+    })
+    
+    mobileLeft.addEventListener('touchstart', () => {
+        keyboard.LEFT = true;
+    });
+    mobileRight.addEventListener('touchstart', () => {
+        keyboard.RIGHT = true;
+    });
+    mobileJump.addEventListener('touchstart', () => {
+        keyboard.UP = true;
+    });
+    mobileThrow.addEventListener('touchstart', () => {
+        keyboard.SPACE = true;
+    });
+    
+    mobileLeft.addEventListener('touchend', () => {
+        keyboard.LEFT = false;
+    });
+    mobileRight.addEventListener('touchend', () => {
+        keyboard.RIGHT = false;
+    });
+    mobileJump.addEventListener('touchend', () => {
+        keyboard.UP = false;
+    });
+    mobileThrow.addEventListener('touchend', () => {
+        keyboard.SPACE = false;
+        world.canThrow = true;
+    });
+})
 
 
 

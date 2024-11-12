@@ -55,7 +55,6 @@ class World {
       document.getElementById("menu_icons").classList.add('d-none');
     } else {
       document.getElementById("icons").classList.add('d-none');
-      document.getElementById("menu_icons").classList.remove('d-none');
     }
   }
 
