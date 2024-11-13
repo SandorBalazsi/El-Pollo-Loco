@@ -67,7 +67,7 @@ class ThrowableObject extends MovableObject{
             clearInterval(this.throwInterval);
             setTimeout(() => {
                 this.loadImage('img/img/6_salsa_bottle/bottle_rotation/bottle_splash/bottle_end.png')
-            }, 1000);
+            }, 600);
         }
     }, 1000/60);
 }

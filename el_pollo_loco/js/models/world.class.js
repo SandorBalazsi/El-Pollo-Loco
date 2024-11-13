@@ -77,16 +77,18 @@ class World {
   checkBottleCollision(){
     world.throwableObjects.forEach((bottle) => {
       this.level.enemies.forEach( (enemy) => {
-        if(bottle.isColliding(level1.enemies[level1.enemies.length -1]) && level1.enemies[level1.enemies.length -1].dead == false){
-          level1.enemies[level1.enemies.length -1].endBossHit();
-          this.endBossStatusBar.setPercentage(level1.enemies[level1.enemies.length -1].energy);
+        let endBoss = level1.enemies[level1.enemies.length -1];
+        if(bottle.isBottleAboveGround() && bottle.isColliding(endBoss) && !endBoss.dead){
+          endBoss.endBossHit();
+          this.endBossStatusBar.setPercentage(endBoss.energy);
         }
-        else if (bottle.isColliding(enemy) && enemy.dead == false){
+        else if (enemy !== endBoss && bottle.isColliding(enemy) && !enemy.dead){
           enemy.chickenDead();
         };
     });
     });
   }
+
 
   checkCollisionWithCoin(){
     this.level.coin = this.level.coin.filter( (coin) => {
@@ -163,9 +165,9 @@ class World {
     this.addToMap(this.statusBar);
     this.addToMap(this.coinBar);
     this.addToMap(this.bottleBar);
-    //if (level1.enemies[level1.enemies.length - 1].endBossAgro === true){
-    //  this.addToMap(this.endBossStatusBar);
-    //}
+    if (level1.enemies[level1.enemies.length - 1].agroTriggered === true){
+      this.addToMap(this.endBossStatusBar);
+    }
     
     this.ctx.translate(this.camera_x, 0);
 

@@ -5,13 +5,18 @@ class Endboss extends MovableObject {
     height = 500;
     width = 350;
     speed = 1;
-
     energy = 100;
-    endBossAgro = false;
-    isAnimating = false;
 
-    dead = false;
+    isAlerting = false;
+    isAgro = false;
+    isWalking = false;
+    isAttacking = false;
+    isHurt = false;
+    isDead = false;
 
+    agroTriggered = false;
+
+    lastHit = 0;
 
     IMAGES_WALKING = [
         'img/img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -21,10 +26,14 @@ class Endboss extends MovableObject {
     ];
 
     IMAGES_ALERT = [ 
+        'img/img/4_enemie_boss_chicken/2_alert/G5.png',
+        'img/img/4_enemie_boss_chicken/2_alert/G6.png',
+        'img/img/4_enemie_boss_chicken/2_alert/G7.png',
         'img/img/4_enemie_boss_chicken/2_alert/G8.png',
         'img/img/4_enemie_boss_chicken/2_alert/G9.png',
         'img/img/4_enemie_boss_chicken/2_alert/G10.png',
-        'img/img/4_enemie_boss_chicken/2_alert/G11.png'
+        'img/img/4_enemie_boss_chicken/2_alert/G11.png',
+        'img/img/4_enemie_boss_chicken/2_alert/G12.png'
     ];
 
     IMAGES_ATTACK = [
@@ -61,103 +70,117 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.alertEndboss();
+        
         this.action_music.muted = true;
+
+        this.startMainLoop();
     }
 
-
-    alertEndboss(){
+    startMainLoop(){
 
         setInterval(() => {
-                if ((this.x - world.character.x) <= 500){
-                    if (!this.endBossAgro) {
-                        this.endBossAgro = true;
-                        this.startAnimation();
-                    } 
-            } else {
-                this.endBossAgro = false;
-                this.isAnimating = false;
-            }       
-            }, 300);
-    }
+            if (this.isDead) return;
 
+            let distanceToCharacter = this.x - world.character.x;
 
-    startAnimation(){
-        if (this.isAnimating) return;
-        this.isAnimating = true;
-    
-        // Start the alert animation first
-        this.playAlertAnimation();
-    }
-    
+            if (!this.agroTriggered && distanceToCharacter <= 500) {
+                this.agroTriggered = true;
+                this.startAlertAnimation();
 
-    playWalkingAnimation() {
-        let walkingInterval = setInterval(() => {
-            if (!this.endBossAgro) {
-                clearInterval(walkingInterval);
-                this.isAnimating = false;
-                return;
+                setTimeout(() => {
+                    setInterval (() => {
+                        if (this.energy <= 0) {
+                            this.startDeathAnimation();
+                        } else if(this.isHurt) {
+                            this.startHurtAnimation();
+                        } else if(this.isAttacking) {
+                            this.startAttackAnimation();
+                        } else if(this.isAgro && !this.isAlerting) {
+                            this.startWalkingAnimation();
+                        } 
+                    },100)
+                },1000)
             }
-    
-            this.moveLeft();
-            this.playAnimation(this.IMAGES_WALKING);
         }, 100);
-    
-        // Stop walking animation and switch back to alert after 3 seconds
-        setTimeout(() => {
-            clearInterval(walkingInterval);
-            if (this.endBossAgro) {
-                this.playAlertAnimation();
-            } else {
-                this.isAnimating = false;
-            }
-        }, 3000);
     }
-    
 
-    playAlertAnimation() {
-        let alertInterval = setInterval(() => {
-            if (!this.endBossAgro) {
-                clearInterval(alertInterval);
-                this.isAnimating = false;
-                return;
-            }
-    
-            this.playAnimation(this.IMAGES_ALERT);
-        }, 100);
-    
-        // Switch to walking animation after 2 seconds
+    startAlertAnimation(){
+        console.log('Alert animation started');
+        this.isAlerting = true;
+        this.isWalking = false;
+        this.isAttacking = false;
+        this.isHurt = false;
+
+        this.playAnimation(this.IMAGES_ALERT);
         setTimeout(() => {
-            clearInterval(alertInterval);
-            if (this.endBossAgro) {
-                this.playWalkingAnimation();
-            } else {
-                this.isAnimating = false;
-            }
+            this.isAgro = true;
+            this.isAlerting = false;
+            console.log('Alert animation completed');  
         }, 2000);
     }
 
-
-    endBossHit(){
-        this.energy -= 20;
-        if (this.energy < 0) {
-            this.energy = 0;
-            this.endBossDead();
-          } else {
-            this.lastHit = new Date().getTime();
-          }
+    startWalkingAnimation() {
+        if (this.isAlertin) return;
+        this.isAttacking = false;
+        this.isHurt = false;
+        
+        this.moveLeft();
+        this.playAnimation(this.IMAGES_WALKING);
+        setInterval(() => {
+            setTimeout(() => {
+                this.x = this.x;
+                this.playAnimation(this.IMAGES_ALERT);
+            },1000)
+            
+        }, 2000);
     }
+
+    startHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+        setTimeout(() => {
+            this.isHurt = false; 
+            this.isAgro = true;
+        }, 500);
+    }
+
+    startAttackAnimation() {
+        if (!this.isAttacking) return;
     
-    endBossIsHurt() {
-        let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
-        return timepassed < 1;
+        this.playAnimation(this.IMAGES_ATTACK);
+
+        setTimeout(() => {
+            this.x -= 10;
+        },1000)
+        
     }
 
-
-    endBossDead(){
-        clearInterval(this.moveChicken);
+    startDeathAnimation() {
+        this.isDead = true;
         this.playAnimation(this.IMAGES_DEAD);
-        this.dead = true;
+        setTimeout(() => {
+            this.stopAnimationOnLastFrame(this.IMAGES_DEAD);
+        }, 3000);
+    }
+
+    stopAnimationOnLastFrame(images) {
+        this.loadImage(images[images.length - 1]);
+    }
+
+    endBossHit() {
+        if (!this.endBossIsHurt()) {
+            this.energy -= 20;
+            if (this.energy <= 0) {
+                this.startDeathAnimation();
+            } else {
+                this.lastHit = new Date().getTime();
+                this.isHurt = true;
+                this.isAttacking = true;
+            }
+        }
+    }
+
+    endBossIsHurt() {
+        let timePassed = (new Date().getTime() - this.lastHit) / 1000;
+        return timePassed < 1;
     }
 }
