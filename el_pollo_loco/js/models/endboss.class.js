@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
     width = 350;
     speed = 1;
     energy = 100;
+    
 
     isAlerting = false;
     isAgro = false;
@@ -13,9 +14,9 @@ class Endboss extends MovableObject {
     isAttacking = false;
     isHurt = false;
     isDead = false;
+    canWalk = false;
 
     agroTriggered = false;
-
     lastHit = 0;
 
     IMAGES_WALKING = [
@@ -72,95 +73,66 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         
         this.action_music.muted = true;
-
         this.startMainLoop();
+        this.startWalkingAnimation();
     }
+
+    
 
     startMainLoop(){
-
+        distance = this.x - world.character.x;
         setInterval(() => {
-            if (this.isDead) return;
+           if (this.isDead) {
+            this.canWalk = false;
+            this.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => {
+                this.stopAnimationOnLastFrame(this.IMAGES_DEAD);
+            }, 3000);
 
-            let distanceToCharacter = this.x - world.character.x;
+           } else if(this.isHurt){
+            this.canWalk = false;
+            this.playAnimation(this.IMAGES_HURT);
+            this.isAgro = true;
+            setTimeout(() => {
+                this.isHurt = false;
+                this.isAttacking = true;
+                this.canWalk = true;
+            }, 1000);
+            
 
-            if (!this.agroTriggered && distanceToCharacter <= 500) {
-                this.agroTriggered = true;
-                this.startAlertAnimation();
+           } else if(this.isAttacking){
+            this.canWalk = false;
+            this.playAnimation(this.IMAGES_ATTACK);
+            this.isAttacking = false;
 
-                setTimeout(() => {
-                    setInterval (() => {
-                        if (this.energy <= 0) {
-                            this.startDeathAnimation();
-                        } else if(this.isHurt) {
-                            this.startHurtAnimation();
-                        } else if(this.isAttacking) {
-                            this.startAttackAnimation();
-                        } else if(this.isAgro && !this.isAlerting) {
-                            this.startWalkingAnimation();
-                        } 
-                    },100)
-                },1000)
-            }
+
+           } else if(distance >= 500 && !this.isAlerting){
+            this.playAnimation(this.IMAGES_ALERT);
+            this.isAlerting = true;
+            this.isAttacking = false;
+            this.isHurt = false;
+            this.isAgro = true;
+            this.canWalk = true;
+           }
+           
         }, 100);
     }
-
-    startAlertAnimation(){
-        console.log('Alert animation started');
-        this.isAlerting = true;
-        this.isWalking = false;
-        this.isAttacking = false;
-        this.isHurt = false;
-
-        this.playAnimation(this.IMAGES_ALERT);
-        setTimeout(() => {
-            this.isAgro = true;
-            this.isAlerting = false;
-            console.log('Alert animation completed');  
-        }, 2000);
-    }
+    
+ 
 
     startWalkingAnimation() {
-        if (this.isAlertin) return;
-        this.isAttacking = false;
-        this.isHurt = false;
-        
-        this.moveLeft();
-        this.playAnimation(this.IMAGES_WALKING);
-        setInterval(() => {
-            setTimeout(() => {
-                this.x = this.x;
+        setInterval(()=>{
+            if (this.isAlerting && this.canWalk){
+                this.moveLeft();
+            }
+            setTimeout(()=>{
+                this.canWalk = false;
                 this.playAnimation(this.IMAGES_ALERT);
-            },1000)
-            
-        }, 2000);
-    }
-
-    startHurtAnimation() {
-        this.playAnimation(this.IMAGES_HURT);
-        setTimeout(() => {
-            this.isHurt = false; 
-            this.isAgro = true;
-        }, 500);
-    }
-
-    startAttackAnimation() {
-        if (!this.isAttacking) return;
-    
-        this.playAnimation(this.IMAGES_ATTACK);
-
-        setTimeout(() => {
-            this.x -= 10;
-        },1000)
+            }, 1000)
+        }, 100);
         
-    }
+    };
 
-    startDeathAnimation() {
-        this.isDead = true;
-        this.playAnimation(this.IMAGES_DEAD);
-        setTimeout(() => {
-            this.stopAnimationOnLastFrame(this.IMAGES_DEAD);
-        }, 3000);
-    }
 
     stopAnimationOnLastFrame(images) {
         this.loadImage(images[images.length - 1]);

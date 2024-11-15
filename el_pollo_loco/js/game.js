@@ -230,6 +230,9 @@ function openGameFullscreen(){
 function closeGameFullscreen(){
     let fullscreen = document.getElementById("fullscreen");
     closeFullscreen(fullscreen);
+    fullscreen.style.width = "100%";
+    fullscreen.style.height = "100%";
+    
 }
 
 function openFullscreen(elem) {
