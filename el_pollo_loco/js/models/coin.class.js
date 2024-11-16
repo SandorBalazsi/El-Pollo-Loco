@@ -19,15 +19,11 @@ class Coin extends MovableObject {
         this.height = 50;
         this.width = 50;
         this.y = y;
-
         this.x = x;
-
         this.rotateCoin;
     }
 
     rotateCoin = setInterval(() => {
         this.playAnimation(this.IMAGES_COIN);
      },200);
-
-     
 }

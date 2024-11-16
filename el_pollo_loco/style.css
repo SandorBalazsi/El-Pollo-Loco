@@ -21,7 +21,6 @@ body {
   font-family: "Boxing-Regular", sans-serif;
   height: 100svh;
   overflow: hidden;
-  
 }
 
 .scaled {
@@ -31,8 +30,6 @@ body {
 .d-none {
   display: none;
 }
-
-/*------- Screen Orientation Dialog --------- */
 
 .screen-dialog-bg {
   background-color: rgba(0, 0, 0, 0.7);
@@ -64,9 +61,6 @@ body {
   padding-top: 50px;
 }
 
-/*------- Screen Orientation Dialog END --------- */
-
-/* ------ Controls Dialog ------ */
 .dialog-bg {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 999;
@@ -154,10 +148,6 @@ body {
   font-size: 1.5rem;
 }
 
-/* ------ Controls Dialog End ------ */
-
-/* ------ Endgame Dialog ------ */
-
 .endgame-dialog-bg {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 999;
@@ -184,7 +174,7 @@ body {
   background-image: url("img/img/9_intro_outro_screens/game_over/oh no you lost!.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
 }
 
 .wongame-dialog {
@@ -203,12 +193,11 @@ body {
   background-size: contain;
 }
 
-.endgame-dialog img{
+.endgame-dialog img {
   width: 20%;
-
 }
 
-.wongame-dialog img{
+.wongame-dialog img {
   width: 20%;
 }
 
@@ -240,7 +229,7 @@ canvas {
   position: relative;
 }
 
-.menu_icons div{
+.menu_icons div {
   position: absolute;
   border: 3px black solid;
   border-radius: 20px;
@@ -251,59 +240,60 @@ canvas {
   width: calc((100% / 3) - 65px);
 }
 
-.menu_icons div:active{
+.menu_icons div:active {
   scale: 1.2;
 }
 
-.menu_icons img{
+.menu_icons img {
   width: 35px;
   height: 35px;
 }
 
-.menu_icons span{
+.menu_icons span {
   position: absolute;
   left: 40%;
 }
 
-.fscreen_start{
+.fscreen_start {
   bottom: 10px;
   left: 7px;
 }
 
-.fscreen_options{
+.fscreen_options {
   bottom: 10px;
   left: calc((100% / 3) + 7px);
 }
 
-.fscreen_credits{
+.fscreen_credits {
   bottom: 10px;
   left: calc(((100% / 3) * 2) + 7px);
 }
 
-.fscreen_menu_fscreen{
+.fscreen_menu_fscreen {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
-.fscreen_menu_mute{
+.fscreen_menu_mute {
   position: absolute;
   top: 10px;
   left: 10px;
 }
 
-.fscreen_menu_fscreen:active, .fscreen_menu_mute:active{
+.fscreen_menu_fscreen:active,
+.fscreen_menu_mute:active {
   width: 40px;
   height: 40px;
 }
 
-.icons img{
+.icons img {
   position: absolute;
   width: 50px;
   height: 50px;
 }
 
-.icons img:active{
+.icons img:active {
   width: 55px;
   height: 55px;
 }
@@ -313,29 +303,27 @@ canvas {
   left: 30px;
 }
 
-.right{
+.right {
   bottom: 30px;
   left: 90px;
 }
 
-.mobile_home{
+.mobile_home {
   top: 20px;
   right: 80px;
 }
 
-
-.mobile_mute{
+.mobile_mute {
   top: 20px;
   right: 20px;
 }
-
 
 .throw {
   bottom: 80px;
   right: 30px;
 }
 
-.jump{
+.jump {
   bottom: 30px;
   right: 90px;
 }
@@ -367,8 +355,6 @@ canvas {
   height: 480px;
   border-radius: 10px;
 }
-
-/* Menu Buttons */
 
 button {
   position: relative;
@@ -454,9 +440,6 @@ button:focus:not(:focus-visible) {
   outline: none;
 }
 
-/* Menu Buttons End */
-
-/*------ Settings ------*/
 .container {
   margin-top: 30px;
   margin-right: 60px;
@@ -471,10 +454,10 @@ button:focus:not(:focus-visible) {
   user-select: none;
   fill: black;
 }
-/*MUTE BUTTON*/
+
 .container .mute {
   position: absolute;
-  
+
   animation: keyframes-fill 0.5s;
 }
 
@@ -484,7 +467,6 @@ button:focus:not(:focus-visible) {
   animation: keyframes-fill 0.5s;
 }
 
-/* ------ On check event ------ */
 .container input:checked ~ .voice {
   display: block;
 }
@@ -493,7 +475,6 @@ button:focus:not(:focus-visible) {
   display: none;
 }
 
-/* ------ Hide the default checkbox ------ */
 .container input {
   position: absolute;
   opacity: 0;
@@ -502,7 +483,6 @@ button:focus:not(:focus-visible) {
   width: 0;
 }
 
-/* ------ Animation ------ */
 @keyframes keyframes-fill {
   0% {
     transform: rotate(0deg) scale(0);
@@ -513,11 +493,7 @@ button:focus:not(:focus-visible) {
     transform: rotate(-10deg) scale(1.2);
   }
 }
-/* MUTE BUTTON END*/
 
-
-
-/* Smartphones --------------*/
 @media only screen and (max-width: 720px) {
   canvas {
     width: 100%;
@@ -547,64 +523,61 @@ button:focus:not(:focus-visible) {
 }
 
 @media only screen and (max-height: 600px) {
-
-  .dialog{
+  .dialog {
     width: 50vw;
     height: 80vh;
   }
 
-  .close{
+  .close {
     width: 30px;
     height: 30px;
     right: 10px;
     top: 10px;
   }
 
-  .controls_title h1{
+  .controls_title h1 {
     font-size: 35px;
   }
 
-  .controls{
+  .controls {
     margin-top: unset;
   }
 
-  .controls_icons{
+  .controls_icons {
     padding: 30px 25px;
     gap: 10px;
   }
 
-  .controls_icons img{
+  .controls_icons img {
     width: 30px;
     height: 30px;
   }
 
-  .space_icon{
+  .space_icon {
     height: 56px !important;
     width: 100px !important;
   }
 
-  .controls_line{
+  .controls_line {
     gap: 16px;
     padding: unset;
   }
 
-  .controls_line span{
-    height: 30px; 
+  .controls_line span {
+    height: 30px;
     font-size: 1rem;
   }
-
-
-
 }
 
 @media only screen and (max-width: 950px) {
-  .endgame-dialog img, .wongame-dialog img{
+  .endgame-dialog img,
+  .wongame-dialog img {
     width: 15%;
     height: 35%;
   }
 
-  .endgame-dialog{
-    background-size: cover;
+  .endgame-dialog {
+    background-size: contain;
   }
 
   .endgame-buttons {
@@ -612,16 +585,152 @@ button:focus:not(:focus-visible) {
     justify-content: center;
   }
 
-  .endgame-dialog button{
+  .endgame-dialog button {
     width: 35%;
   }
 
-  .wongame-dialog button{
+  .wongame-dialog button {
     width: 35%;
   }
 
-  .text{
+  .text {
     padding: 4px 20px;
     font-size: 17px;
+  }
+}
+
+.credits {
+  overflow: auto;
+  padding: 20px;
+  scrollbar-width: none;
+}
+
+#jmdcontent h1,
+#jmdcontent h2,
+#jmdcontent h3,
+#jmdcontent h4,
+#jmdcontent h5,
+#jmdcontent h6 {
+  margin: 1.5em 0 1em 0;
+}
+
+#jmdcontent {
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+#jmdcontent a {
+  word-break: break-word;
+}
+
+#jmdcontent code {
+  background-color: #f5f5f5;
+  color: #bd4147;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  display: inline-block;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  font-size: 85%;
+  font-weight: 900;
+}
+
+#jmdcontent code:after,
+#jmdcontent code:before {
+  content: "\A0";
+  letter-spacing: -1px;
+}
+
+#jmdcontent table {
+  border: solid 1px #eeeeee;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.9em;
+  line-height: normal;
+}
+
+#jmdcontent table thead th {
+  background-color: #efefef;
+  padding: 10px;
+  text-align: left;
+  color: black;
+  margin: revert;
+  width: revert;
+  height: revert;
+}
+
+#jmdcontent table tbody td {
+  border: solid 1px #eeeeee;
+  padding: 10px;
+}
+
+#jmdcontent .cancellation-policy,
+#jmdcontent .jmd-bordered {
+  border: solid 1px;
+  padding: 0em 1em;
+}
+
+#jmdcontent ol {
+  counter-reset: item;
+}
+
+#jmdcontent ol > li {
+  display: block;
+}
+
+#jmdcontent li {
+  list-style-position: outside !important;
+}
+
+#jmdcontent ol > li > *:first-child:before {
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+}
+
+@media (max-width: 1600px) {
+  #jmdcontent table,
+  #jmdcontent thead,
+  #jmdcontent tbody,
+  #jmdcontent tfoot,
+  #jmdcontent tr,
+  #jmdcontent th,
+  #jmdcontent td {
+    display: block;
+  }
+
+  #jmdcontent thead tr,
+  #jmdcontent tfoot tr > th {
+    display: none;
+  }
+
+  #jmdcontent tr {
+    border: 1px solid #ccc;
+    margin-bottom: 1em;
+  }
+
+  #jmdcontent tr:last-child {
+    margin-bottom: 0;
+  }
+
+  #jmdcontent table tbody td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    white-space: normal;
+    text-align: left;
+    padding: 5px 10px 5px calc(30% + 20px);
+  }
+
+  #jmdcontent table tbody td:before {
+    content: attr(data-header);
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 30%;
+    padding: 5px 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
   }
 }

@@ -4,15 +4,13 @@ let keyboard = new Keyboard;
 let background_music = new Audio('audio/background_music.mp3');
 soundOn = false;
 
-function returnToMainMenu(){
+function returnToMainMenu() {
     window.location.href = 'index.html';
 }
 
 function init() {
-
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
-
 }
 
 screen.orientation.addEventListener("change", () => {
@@ -29,25 +27,33 @@ window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
     }
 });
 
-function isMobile(){
-    return navigator.maxTouchPoints > 0 && /Android|iPhone/i.test(navigator.userAgent);
+function isMobile() {
+    return navigator.maxTouchPoints > 0 && /Android|iPhone|iPad/i.test(navigator.userAgent);
 }
 
-function checkMobileDevice(){
-    if (this.isMobile()){
-      document.getElementById("menu_icons").classList.remove('d-none');
-      document.getElementById("logo").classList.add("d-none");
-      document.getElementById("title").classList.add('d-none');
-      document.getElementById("main_menu_buttons").style.display = "none";
-      document.getElementById("main_menu_mute").classList.add('d-none');
+function checkMobileDevice() {
+    if (this.isMobile()) {
+       changeToMobile();
     } else {
-        document.getElementById("menu_icons").classList.add('d-none');
-        document.getElementById("title").classList.remove('d-none')
-        document.getElementById("logo").classList.remove('d-none');;
-        document.getElementById("main_menu_buttons").style.display = "flex";
-        document.getElementById("main_menu_mute").classList.remove('d-none');
+       changeBackFromMobile();
     }
-  }
+}
+
+function changeToMobile(){
+    document.getElementById("menu_icons").classList.remove('d-none');
+    document.getElementById("logo").classList.add("d-none");
+    document.getElementById("title").classList.add('d-none');
+    document.getElementById("main_menu_buttons").style.display = "none";
+    document.getElementById("main_menu_mute").classList.add('d-none');
+}
+
+function changeBackFromMobile(){
+    document.getElementById("menu_icons").classList.add('d-none');
+    document.getElementById("title").classList.remove('d-none')
+    document.getElementById("logo").classList.remove('d-none');;
+    document.getElementById("main_menu_buttons").style.display = "flex";
+    document.getElementById("main_menu_mute").classList.remove('d-none');
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     let mobileLeft = document.getElementById("mobileLeft");
@@ -59,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     homeButton.addEventListener('click', () => {
         returnToMainMenu();
     })
-    
     mobileLeft.addEventListener('touchstart', () => {
         keyboard.LEFT = true;
     });
@@ -72,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileThrow.addEventListener('touchstart', () => {
         keyboard.SPACE = true;
     });
-    
+
     mobileLeft.addEventListener('touchend', () => {
         keyboard.LEFT = false;
     });
@@ -88,66 +93,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })
 
-
-
-
-window.addEventListener('keydown', (e) =>{
+window.addEventListener('keydown', (e) => {
     console.log(e);
-    if (e.keyCode == 39){
+    if (e.keyCode == 39) {
         keyboard.RIGHT = true;
     }
-
-    if (e.keyCode == 37){
+    if (e.keyCode == 37) {
         keyboard.LEFT = true;
     }
-
-    if (e.keyCode == 38){
+    if (e.keyCode == 38) {
         keyboard.UP = true;
     }
-
-    if (e.keyCode == 40){
+    if (e.keyCode == 40) {
         keyboard.DOWN = true;
     }
-
-    if (e.keyCode == 32){
+    if (e.keyCode == 32) {
         keyboard.SPACE = true;
     }
-
-    if (e.keyCode == 68){
+    if (e.keyCode == 68) {
         keyboard.D = true;
     }
 });
 
-window.addEventListener('keyup', (e) =>{
-    if (e.keyCode == 39){
+window.addEventListener('keyup', (e) => {
+    if (e.keyCode == 39) {
         keyboard.RIGHT = false;
     }
-
-    if (e.keyCode == 37){
+    if (e.keyCode == 37) {
         keyboard.LEFT = false;
     }
-
-    if (e.keyCode == 38){
+    if (e.keyCode == 38) {
         keyboard.UP = false;
     }
-
-    if (e.keyCode == 40){
+    if (e.keyCode == 40) {
         keyboard.DOWN = false;
     }
-
-    if (e.keyCode == 32){
+    if (e.keyCode == 32) {
         keyboard.SPACE = false;
         world.canThrow = true;
     }
-
-    if (e.keyCode == 68){
+    if (e.keyCode == 68) {
         keyboard.D = false;
-        
     }
 });
 
-
-function startGame(){
+function startGame() {
     document.getElementById("main_picture").style.display = "none";
     document.getElementById("canvas").style.display = "block";
     document.getElementById("start_game").classList.add("d-none");
@@ -155,92 +145,106 @@ function startGame(){
     initLevel();
     init();
     startMusic();
-    
 }
 
-function restartGame(){
+function restartGame() {
     document.getElementById("endgame_dialog").style.display = "none";
     document.getElementById("wongame_dialog").style.display = "none";
     startGame();
 }
 
-function loadMainPage(){
+function loadMainPage() {
     window.location.assign("index.html");
 }
 
-function stopGame(){
-        clearAllIntervals();
-        showEndGameDialog();
+function stopGame() {
+    clearAllIntervals();
+    showEndGameDialog();
 }
 
-function wonGame(){
-        clearAllIntervals();
-        showWonGameDialog();
+function wonGame() {
+    clearAllIntervals();
+    showWonGameDialog();
 }
 
-function showControls(){
+function showControls() {
     document.getElementById("control_dialog").style.display = "flex";
 }
 
-function showEndGameDialog(){
+function showCredits() {
+    document.getElementById("credits_dialog").style.display = "flex";
+}
+
+function showEndGameDialog() {
     document.getElementById("endgame_dialog").style.display = "flex";
 }
-function showWonGameDialog(){
+function showWonGameDialog() {
     document.getElementById("wongame_dialog").style.display = "flex";
 }
 
-function closeControls(){
+function closeControls() {
     document.getElementById("control_dialog").style.display = "none";
-    document.getElementById("dialog_content").addEventListener("click", function(event){
+    document.getElementById("dialog_content").addEventListener("click", function (event) {
         event.preventDefault()
-      });
+    });
 }
 
-function doNotClose(event){
+function closeCredits() {
+    document.getElementById("credits_dialog").style.display = "none";
+    document.getElementById("credits_dialog_content").addEventListener("click", function (event) {
+        event.preventDefault()
+    });
+}
+
+function doNotClose(event) {
     event.stopPropagation();
 }
 
-function clearAllIntervals(){
+function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-
-function startMusic(){
-    
+function startMusic() {
     soundOn = true;
     background_music.muted = false;
     checkOnMusic();
-    document.getElementById("mobileSound").src = "img/img/10_logos_icons/unmute-mobile.png";
-    document.getElementById("mobileSound").onclick = mute;
-    
-
-    
 }
 
-function checkOnMusic(){
+function checkOnMusic() {
     if (soundOn === true) {
         background_music.autoplay;
         background_music.loop = true;
         background_music.play();
-        document.getElementById("musicOn").style.display = "none";
-        document.getElementById("musicOff").style.display ="block";
+        changeAudioButtonOn();
     } else {
         background_music.muted = true;
     };
 }
 
-function stopMusic(){
+function stopMusic() {
     soundOn = false;
 }
 
-function mute(){
+function mute() {
     stopMusic();
     checkOnMusic();
-    document.getElementById("mobileSound").src = "img/img/10_logos_icons/mute-mobile.png";
-    document.getElementById("mobileSound").onclick = startMusic;
-    document.getElementById("musicOn").style.display = "block";
-    document.getElementById("musicOff").style.display ="none";
+    changeAudioButtonOff();
 }
 
+function changeAudioButtonOn() {
+    document.getElementById("musicOn").style.display = "none";
+    document.getElementById("musicOff").style.display = "block";
+    document.getElementById("mobileSound").src = "img/img/10_logos_icons/mute-mobile.png";
+    document.getElementById("mobileSound").onclick = mute;
+    document.getElementById("menuMute").src = "img/img/10_logos_icons/mute-mobile.png";
+    document.getElementById("menuMute").onclick = mute;
+}
 
-
+function changeAudioButtonOff() {
+    document.getElementById("mobileSound").src = "img/img/10_logos_icons/unmute-mobile.png";
+    document.getElementById("mobileSound").onclick = startMusic;
+    document.getElementById("musicOn").style.display = "block";
+    document.getElementById("musicOff").style.display = "none";
+    document.getElementById("menuMute").src = "img/img/10_logos_icons/unmute-mobile.png";
+    document.getElementById("menuMute").onclick = startMusic;
+}

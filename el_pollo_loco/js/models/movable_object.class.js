@@ -17,17 +17,16 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
     setInterval(() => {
-        if(this.isAboveGround() || this.speedY > 0) {
-            this.y -= this.speedY;
-            this.speedY -= this.acceleration; 
-            if(world.character.y >= 125) {
-                this.y = 125;
-                this.speedY = 0; 
-            }
-        } 
+      if (this.isAboveGround() || this.speedY > 0) {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+        if (world.character.y >= 125) {
+          this.y = 125;
+          this.speedY = 0;
+        }
+      }
     }, 1000 / 30);
-}
-
+  }
 
   isAboveGround() {
     if (this instanceof ThrowableObject) {
@@ -68,7 +67,6 @@ class MovableObject extends DrawableObject {
     return timepassed < 1;
   }
 
-
   moveRight() {
     this.x += this.speed;
   }
@@ -87,6 +85,4 @@ class MovableObject extends DrawableObject {
   jump() {
     this.speedY = 25;
   }
-
-
 }

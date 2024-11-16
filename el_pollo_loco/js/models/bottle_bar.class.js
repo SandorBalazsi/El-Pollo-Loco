@@ -15,8 +15,8 @@ class BottleBar extends DrawableObject {
     ];
 
     bottleNr = 0;
-    
-    constructor(){
+
+    constructor() {
         super();
         this.loadImages(this.IMAGES_BOTTLE);
         this.x = 320;
@@ -26,9 +26,8 @@ class BottleBar extends DrawableObject {
         this.setBottleNr(0);
     }
 
-    setBottleNr(bottleNr){
+    setBottleNr(bottleNr) {
         this.bottleNr = bottleNr;
-
         let path = this.IMAGES_BOTTLE[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
@@ -39,7 +38,7 @@ class BottleBar extends DrawableObject {
         } else if (this.bottlenNr == 9) {
             return 9;
         } else if (this.bottleNr == 8) {
-            return 8; 
+            return 8;
         } else if (this.bottleNr == 7) {
             return 7;
         } else if (this.bottleNr == 6) {

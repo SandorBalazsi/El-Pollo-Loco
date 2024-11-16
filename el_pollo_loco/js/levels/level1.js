@@ -4,12 +4,19 @@ let coins;
 function initLevel(){
         level1 = new Level(
         [   new Chicken(),
-            new SmallChicken()
-            //new Chicken(), 
-            //new Chicken(),
-            //new Chicken(), 
-            //new Chicken(), 
-            //new Chicken(), 
+            new SmallChicken(),
+            new Chicken(), 
+            new SmallChicken(),
+            new Chicken(), 
+            new SmallChicken(), 
+            new Chicken(),
+            new SmallChicken(),
+            new Chicken(), 
+            new Chicken(), 
+            new SmallChicken(), 
+            new Chicken(),
+            new SmallChicken(),
+            new Chicken() 
         ],
         [
             new Cloud(Math.random() * (500 - 0) + 0),
@@ -64,16 +71,29 @@ function initLevel(){
           [],
           [],
           [ 
-            new Coin(100,120),
-            new Coin(200,120),
-            new Coin(300,120)
+            new Coin(300,140),
+            new Coin(400,120),
+            new Coin(1700,140),
+            new Coin(790,120),
+            new Coin(1510,140),
+            new Coin(2050,120),
+            new Coin(1850,140),
+            new Coin(2190,120),
+            new Coin(2480,140),
+            new Coin(600,120)
           ],
           [
-            new Bottle(500),
-            new Bottle(600),
-            new Bottle(700),
-            new Bottle(800),
-            new Bottle(900)
+            new Bottle(250),
+            new Bottle(400),
+            new Bottle(810),
+            new Bottle(1200),
+            new Bottle(1750),
+            new Bottle(1900),
+            new Bottle(2200),
+            new Bottle(2600),
+            new Bottle(2580),
+            new Bottle(2280)
+
         ],
          
           

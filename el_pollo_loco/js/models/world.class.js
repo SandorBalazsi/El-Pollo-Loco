@@ -1,8 +1,6 @@
 class World {
   endBoss = new Endboss();
   character = new Character();
-  
-  
   ctx;
   level;
   keyboard;
@@ -15,8 +13,6 @@ class World {
   throwableObjects = [];
   canThrow = false;
   distanceToCharacter;
-  
-  
 
   collect_sound = new Audio('audio/collect_coin.mp3');
   collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
@@ -29,41 +25,36 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
-   
   }
 
   setWorld() {
     this.endBoss.world = this;
     this.character.world = this;
-    
   }
 
-  run(){
+  run() {
     setInterval(() => {
-    this.checkMobileDevice();
-    this.checkCollisions();
-    this.checkCollisionWithCoin();
-    this.checkCollisionWithBottle();
-    this.checkThrowObjects();
-    this.checkBottleCollision();
-    this.checkDistanceToCharacter();
-    
-
-   
+      this.checkMobileDevice();
+      this.checkCollisions();
+      this.checkCollisionWithCoin();
+      this.checkCollisionWithBottle();
+      this.checkThrowObjects();
+      this.checkBottleCollision();
+      this.checkDistanceToCharacter();
     }, 60);
   }
 
- isMobile(){
+  isMobile() {
     return navigator.maxTouchPoints > 0 && /Android|iPhone/i.test(navigator.userAgent);
-}
+  }
 
-checkDistanceToCharacter(){
-  this.distanceToCharacter = this.endBoss.x - this.character.x;
-  this.endBoss.distanceToCharacter = this.distanceToCharacter;
-}
+  checkDistanceToCharacter() {
+    this.distanceToCharacter = this.endBoss.x - this.character.x;
+    this.endBoss.distanceToCharacter = this.distanceToCharacter;
+  }
 
-  checkMobileDevice(){
-    if (this.isMobile()){
+  checkMobileDevice() {
+    if (this.isMobile()) {
       document.getElementById("icons").classList.remove('d-none');
       document.getElementById("menu_icons").classList.add('d-none');
     } else {
@@ -71,39 +62,37 @@ checkDistanceToCharacter(){
     }
   }
 
-
-  checkCollisions(){
-    this.level.enemies.forEach( (enemy) => {
+  checkCollisions() {
+    this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        if (this.character.speedY < 0 && enemy.dead == false){
+        if (this.character.speedY < 0 && enemy.dead == false) {
           this.character.jump();
           enemy.chickenDead();
-        } else if(enemy.dead == false){
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
-        console.log('Collision with Character', this.character.energy);
-      }};
-     });
+        } else if (enemy.dead == false) {
+          this.character.hit();
+          this.statusBar.setPercentage(this.character.energy);
+          console.log('Collision with Character', this.character.energy);
+        }
+      };
+    });
   }
 
-
-  checkBottleCollision(){
+  checkBottleCollision() {
     world.throwableObjects.forEach((bottle) => {
-      this.level.enemies.forEach( (enemy) => {
-        if(bottle.isBottleAboveGround() && bottle.isColliding(this.endBoss) && !this.endBoss.dead){
+      this.level.enemies.forEach((enemy) => {
+        if (bottle.isBottleAboveGround() && bottle.isColliding(this.endBoss) && !this.endBoss.dead) {
           this.endBoss.endBossHit();
           this.endBossStatusBar.setPercentage(this.endBoss.energy);
         }
-        else if (enemy !== this.endBoss && bottle.isColliding(enemy) && !enemy.dead){
+        else if (enemy !== this.endBoss && bottle.isColliding(enemy) && !enemy.dead && bottle.isBottleAboveGround()) {
           enemy.chickenDead();
         };
-    });
+      });
     });
   }
 
-
-  checkCollisionWithCoin(){
-    this.level.coin = this.level.coin.filter( (coin) => {
+  checkCollisionWithCoin() {
+    this.level.coin = this.level.coin.filter((coin) => {
       if (this.character.isColliding(coin) && this.coinBar.coinNr < 10) {
         this.collectCoin(coin);
         return false;  // Coin entfernen
@@ -112,21 +101,16 @@ checkDistanceToCharacter(){
     });
   }
 
-
-  collectCoin(){
-    this.coinBar.coinNr ++;
-    this.coinBar.width += 10;
-
+  collectCoin() {
+    this.coinBar.coinNr++;
     this.coinBar.setCoinNr(this.coinBar.coinNr);
-    console.log('Coin collected!');
-    if (soundOn == true){
+    if (soundOn == true) {
       this.collect_sound.play();
     };
-    
   }
 
-  checkCollisionWithBottle(){
-    this.level.bottle = this.level.bottle.filter( (bottle) => {
+  checkCollisionWithBottle() {
+    this.level.bottle = this.level.bottle.filter((bottle) => {
       if (this.character.isColliding(bottle) && this.bottleBar.bottleNr < 10) {
         this.canThrow = true;
         this.collectBottle(bottle);
@@ -136,68 +120,64 @@ checkDistanceToCharacter(){
     });
   }
 
-  collectBottle(){
-    this.bottleBar.bottleNr ++;
+  collectBottle() {
+    this.bottleBar.bottleNr++;
     this.bottleBar.setBottleNr(this.bottleBar.bottleNr);
     console.log('Bottle collected!');
-    this.collectedBottle ++;
+    this.collectedBottle++;
     this.bottleBar.scale = 1;
-    if (soundOn == true){
+    if (soundOn == true) {
       this.collect_bottle_sound.play();
     };
   }
 
-
-  checkThrowObjects(){
+  checkThrowObjects() {
     if (this.keyboard.SPACE && this.collectedBottle > 0 && this.canThrow) {
-      this.collectedBottle --;
+      this.collectedBottle--;
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
       this.throwableObjects.push(bottle);
-      this.bottleBar.bottleNr --;
+      this.bottleBar.bottleNr--;
       this.bottleBar.setBottleNr(this.bottleBar.bottleNr);
-
       this.canThrow = false;
     }
-  
   }
-
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.ctx.translate(this.camera_x, 0);
-    this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds);
-    this.addObjectsToMap(this.level.coin);
-    this.addObjectsToMap(this.level.bottle);
-    
+    this.addObjects();
     this.ctx.translate(-this.camera_x, 0);
-    
-    //------ Space for fixed objects --------
-    this.addToMap(this.statusBar);
-    this.addToMap(this.coinBar);
-    this.addToMap(this.bottleBar);
-    if (this.endBoss.isAlerted === true){
-      this.addToMap(this.endBossStatusBar);
-    }
-    
+    this.addFixedObjects();
     this.ctx.translate(this.camera_x, 0);
-
-    this.addToMap(this.endBoss);
-    this.addToMap(this.character);
-    
-    
-    
-    this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.throwableObjects);
-    
+    this.addMovingObjects();
     this.ctx.translate(-this.camera_x, 0);
-
-    //Draw() wird immer wieder aufgerufen
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
     });
+  }
+
+  addObjects(){
+    this.addObjectsToMap(this.level.backgroundObjects);
+    this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.coin);
+    this.addObjectsToMap(this.level.bottle);
+  }
+
+  addFixedObjects(){
+    this.addToMap(this.statusBar);
+    this.addToMap(this.coinBar);
+    this.addToMap(this.bottleBar);
+    if (this.endBoss.isAlerted === true) {
+      this.addToMap(this.endBossStatusBar);
+    }
+  }
+
+  addMovingObjects(){
+    this.addToMap(this.endBoss);
+    this.addToMap(this.character);
+    this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.throwableObjects);
   }
 
   addObjectsToMap(objects) {
@@ -208,27 +188,22 @@ checkDistanceToCharacter(){
 
   addToMap(mo) {
     if (mo.otherDirection) {
-        this.flipImage(mo);
+      this.flipImage(mo);
     }
-    
     mo.draw(this.ctx);
-    mo.showFrame(this.ctx);
-    mo.showOffsetFrame(this.ctx);
-
-
     if (mo.otherDirection) {
-        this.flipImageBack(mo);
+      this.flipImageBack(mo);
     }
   }
 
-  flipImage(mo){
+  flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
     this.ctx.scale(-1, 1);
     mo.x = mo.x * -1;
   }
 
-  flipImageBack(mo){
+  flipImageBack(mo) {
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
