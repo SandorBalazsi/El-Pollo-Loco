@@ -159,6 +159,7 @@ function startGame(){
 
 function restartGame(){
     document.getElementById("endgame_dialog").style.display = "none";
+    document.getElementById("wongame_dialog").style.display = "none";
     startGame();
 }
 
@@ -171,12 +172,20 @@ function stopGame(){
         showEndGameDialog();
 }
 
+function wonGame(){
+        clearAllIntervals();
+        showWonGameDialog();
+}
+
 function showControls(){
     document.getElementById("control_dialog").style.display = "flex";
 }
 
 function showEndGameDialog(){
     document.getElementById("endgame_dialog").style.display = "flex";
+}
+function showWonGameDialog(){
+    document.getElementById("wongame_dialog").style.display = "flex";
 }
 
 function closeControls(){
@@ -221,39 +230,6 @@ function mute(){
     stopMusic();
     checkOnMusic();
 }
-
-function openGameFullscreen(){
-    let fullscreen = document.getElementById("fullscreen");
-    openFullscreen(fullscreen);
-}
-
-function closeGameFullscreen(){
-    let fullscreen = document.getElementById("fullscreen");
-    closeFullscreen(fullscreen);
-    fullscreen.style.width = "100%";
-    fullscreen.style.height = "100%";
-    
-}
-
-function openFullscreen(elem) {
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) { /* Safari */
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE11 */
-      elem.msRequestFullscreen();
-    }
-  }
-
-  function closeFullscreen(document) {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) { /* Safari */
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { /* IE11 */
-      document.msExitFullscreen();
-    }
-  }
 
 
 

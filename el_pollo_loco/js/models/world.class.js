@@ -1,5 +1,8 @@
 class World {
+  endBoss = new Endboss();
   character = new Character();
+  
+  
   ctx;
   level;
   keyboard;
@@ -11,6 +14,7 @@ class World {
   collectedBottle = 0;
   throwableObjects = [];
   canThrow = false;
+  distanceToCharacter;
   
   
 
@@ -29,7 +33,9 @@ class World {
   }
 
   setWorld() {
+    this.endBoss.world = this;
     this.character.world = this;
+    
   }
 
   run(){
@@ -40,6 +46,8 @@ class World {
     this.checkCollisionWithBottle();
     this.checkThrowObjects();
     this.checkBottleCollision();
+    this.checkDistanceToCharacter();
+    
 
    
     }, 60);
@@ -47,6 +55,11 @@ class World {
 
  isMobile(){
     return navigator.maxTouchPoints > 0 && /Android|iPhone/i.test(navigator.userAgent);
+}
+
+checkDistanceToCharacter(){
+  this.distanceToCharacter = this.endBoss.x - this.character.x;
+  this.endBoss.distanceToCharacter = this.distanceToCharacter;
 }
 
   checkMobileDevice(){
@@ -77,12 +90,11 @@ class World {
   checkBottleCollision(){
     world.throwableObjects.forEach((bottle) => {
       this.level.enemies.forEach( (enemy) => {
-        let endBoss = level1.enemies[level1.enemies.length -1];
-        if(bottle.isBottleAboveGround() && bottle.isColliding(endBoss) && !endBoss.dead){
-          endBoss.endBossHit();
-          this.endBossStatusBar.setPercentage(endBoss.energy);
+        if(bottle.isBottleAboveGround() && bottle.isColliding(this.endBoss) && !this.endBoss.dead){
+          this.endBoss.endBossHit();
+          this.endBossStatusBar.setPercentage(this.endBoss.energy);
         }
-        else if (enemy !== endBoss && bottle.isColliding(enemy) && !enemy.dead){
+        else if (enemy !== this.endBoss && bottle.isColliding(enemy) && !enemy.dead){
           enemy.chickenDead();
         };
     });
@@ -165,13 +177,15 @@ class World {
     this.addToMap(this.statusBar);
     this.addToMap(this.coinBar);
     this.addToMap(this.bottleBar);
-    if (level1.enemies[level1.enemies.length - 1].agroTriggered === true){
+    if (this.endBoss.isAlerted === true){
       this.addToMap(this.endBossStatusBar);
     }
     
     this.ctx.translate(this.camera_x, 0);
 
+    this.addToMap(this.endBoss);
     this.addToMap(this.character);
+    
     
     
     this.addObjectsToMap(this.level.enemies);

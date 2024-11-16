@@ -184,12 +184,32 @@ body {
   background-image: url("img/img/9_intro_outro_screens/game_over/oh no you lost!.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+}
+
+.wongame-dialog {
+  height: 50vh;
+  width: 50vw;
+  background-color: rgb(251, 196, 101);
+  display: flex;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-image: url("img/img/9_intro_outro_screens/win/won_2.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .endgame-dialog img{
   width: 20%;
 
+}
+
+.wongame-dialog img{
+  width: 20%;
 }
 
 .endgame-buttons {
@@ -503,65 +523,6 @@ button:focus:not(:focus-visible) {
 }
 /* MUTE BUTTON END*/
 
-/*Fullscreen Button*/
-/*------ Settings ------*/
-.fullscreen {
-  margin-left: 60px;
-  --color: #a5a5b0;
-  --size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  font-size: var(--size);
-  user-select: none;
-  fill: black;
-}
-
-.fullscreen .expand {
-  position: absolute;
-  animation: keyframes-fill 0.5s;
-  display: none;
-}
-
-.fullscreen .compress {
-  position: absolute;
-
-  animation: keyframes-fill 0.5s;
-}
-
-/* ------ On check event ------ */
-.fullscreen input:checked ~ .expand {
-  display: block;
-}
-
-.fullscreen input:checked ~ .compress {
-  display: none;
-}
-
-/* ------ Hide the default checkbox ------ */
-.fullscreen input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* ------ Animation ------ */
-@keyframes keyframes-fill {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-
-  50% {
-    transform: scale(1.2);
-  }
-}
-
-/*Fullscreen Button End*/
 
 
 /* Smartphones --------------*/
@@ -644,3 +605,31 @@ button:focus:not(:focus-visible) {
 
 }
 
+@media only screen and (max-width: 950px) {
+  .endgame-dialog img, .wongame-dialog img{
+    width: 15%;
+    height: 35%;
+  }
+
+  .endgame-dialog{
+    background-size: cover;
+  }
+
+  .endgame-buttons {
+    bottom: 10px;
+    justify-content: center;
+  }
+
+  .endgame-dialog button{
+    width: 35%;
+  }
+
+  .wongame-dialog button{
+    width: 35%;
+  }
+
+  .text{
+    padding: 4px 20px;
+    font-size: 17px;
+  }
+}
