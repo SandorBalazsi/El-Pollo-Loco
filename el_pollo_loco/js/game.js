@@ -137,6 +137,10 @@ window.addEventListener('keyup', (e) => {
     }
 });
 
+/**
+ * Starts the game by hiding the main picture, showing the canvas, and initializing the game level.
+ * It also starts the background music and displays the pause button.
+ */
 function startGame() {
     document.getElementById("main_picture").style.display = "none";
     document.getElementById("canvas").style.display = "block";
@@ -147,41 +151,69 @@ function startGame() {
     startMusic();
 }
 
+/**
+ * Restarts the game by hiding any endgame dialogs and calling `startGame` to reinitialize the game.
+ */
 function restartGame() {
     document.getElementById("endgame_dialog").style.display = "none";
     document.getElementById("wongame_dialog").style.display = "none";
     startGame();
 }
 
+/**
+ * Redirects the user to the main page (index.html).
+ */
 function loadMainPage() {
     window.location.assign("index.html");
 }
 
+/**
+ * Stops the game by clearing all intervals and displaying the endgame dialog.
+ */
 function stopGame() {
     clearAllIntervals();
     showEndGameDialog();
 }
 
+/**
+ * Stops the game and displays the 'you won' game dialog.
+ */
 function wonGame() {
     clearAllIntervals();
     showWonGameDialog();
 }
 
+/**
+ * Displays the controls dialog.
+ */
 function showControls() {
     document.getElementById("control_dialog").style.display = "flex";
 }
 
+/**
+ * Displays the credits dialog.
+ */
 function showCredits() {
     document.getElementById("credits_dialog").style.display = "flex";
 }
 
+/**
+ * Displays the endgame dialog when the game ends.
+ */
 function showEndGameDialog() {
     document.getElementById("endgame_dialog").style.display = "flex";
 }
+
+/**
+ * Displays the won game dialog when the player wins.
+ */
 function showWonGameDialog() {
     document.getElementById("wongame_dialog").style.display = "flex";
 }
 
+/**
+ * Closes the controls dialog when the user clicks to close it.
+ */
 function closeControls() {
     document.getElementById("control_dialog").style.display = "none";
     document.getElementById("dialog_content").addEventListener("click", function (event) {
@@ -189,6 +221,9 @@ function closeControls() {
     });
 }
 
+/**
+ * Closes the credits dialog when the user clicks to close it.
+ */
 function closeCredits() {
     document.getElementById("credits_dialog").style.display = "none";
     document.getElementById("credits_dialog_content").addEventListener("click", function (event) {
@@ -196,20 +231,34 @@ function closeCredits() {
     });
 }
 
+/**
+ * Prevents the event from propagating (useful for preventing dialog closure when clicking inside specific areas).
+ */
 function doNotClose(event) {
     event.stopPropagation();
 }
 
+/**
+ * Clears all intervals by looping through a range of possible interval IDs.
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+/**
+ * Starts the background music and un-mutes it.
+ * Calls the `checkOnMusic` function to ensure proper music playback.
+ */
 function startMusic() {
     soundOn = true;
     background_music.muted = false;
     checkOnMusic();
 }
 
+/**
+ * Checks if the music is enabled and starts or stops it accordingly.
+ * Also updates the UI button states based on whether music is enabled.
+ */
 function checkOnMusic() {
     if (soundOn === true) {
         background_music.autoplay;
@@ -221,16 +270,25 @@ function checkOnMusic() {
     };
 }
 
+/**
+ * Stops the background music and sets the `soundOn` flag to false.
+ */
 function stopMusic() {
     soundOn = false;
 }
 
+/**
+ * Mutes the background music and updates the UI button state to reflect that music is muted.
+ */
 function mute() {
     stopMusic();
     checkOnMusic();
     changeAudioButtonOff();
 }
 
+/**
+ * Updates the audio button UI to show the 'music on' state, and updates the event handlers for the buttons.
+ */
 function changeAudioButtonOn() {
     document.getElementById("musicOn").style.display = "none";
     document.getElementById("musicOff").style.display = "block";
@@ -240,6 +298,9 @@ function changeAudioButtonOn() {
     document.getElementById("menuMute").onclick = mute;
 }
 
+/**
+ * Updates the audio button UI to show the 'music off' state, and updates the event handlers for the buttons.
+ */
 function changeAudioButtonOff() {
     document.getElementById("mobileSound").src = "img/img/10_logos_icons/unmute-mobile.png";
     document.getElementById("mobileSound").onclick = startMusic;
