@@ -323,20 +323,12 @@ canvas {
   right: 80px;
 }
 
-.mobile_controls{
+
+.mobile_mute{
   top: 20px;
   right: 20px;
 }
 
-.mobile_mute{
-  top: 80px;
-  right: 20px;
-}
-
-.mobile_fullscreen{
-top: 140px;
-right: 20px;
-}
 
 .throw {
   bottom: 80px;

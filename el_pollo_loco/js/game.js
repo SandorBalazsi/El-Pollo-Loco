@@ -44,7 +44,7 @@ function checkMobileDevice(){
         document.getElementById("menu_icons").classList.add('d-none');
         document.getElementById("title").classList.remove('d-none')
         document.getElementById("logo").classList.remove('d-none');;
-        document.getElementById("main_menu_buttons").style.display = "block";
+        document.getElementById("main_menu_buttons").style.display = "flex";
         document.getElementById("main_menu_mute").classList.remove('d-none');
     }
   }
@@ -154,6 +154,7 @@ function startGame(){
     document.getElementById("pause_game").classList.remove("d-none");
     initLevel();
     init();
+    startMusic();
     
 }
 
@@ -209,6 +210,10 @@ function startMusic(){
     soundOn = true;
     background_music.muted = false;
     checkOnMusic();
+    document.getElementById("mobileSound").src = "img/img/10_logos_icons/unmute-mobile.png";
+    document.getElementById("mobileSound").onclick = mute;
+    
+
     
 }
 
@@ -217,6 +222,8 @@ function checkOnMusic(){
         background_music.autoplay;
         background_music.loop = true;
         background_music.play();
+        document.getElementById("musicOn").style.display = "none";
+        document.getElementById("musicOff").style.display ="block";
     } else {
         background_music.muted = true;
     };
@@ -229,6 +236,10 @@ function stopMusic(){
 function mute(){
     stopMusic();
     checkOnMusic();
+    document.getElementById("mobileSound").src = "img/img/10_logos_icons/mute-mobile.png";
+    document.getElementById("mobileSound").onclick = startMusic;
+    document.getElementById("musicOn").style.display = "block";
+    document.getElementById("musicOff").style.display ="none";
 }
 
 

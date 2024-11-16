@@ -13,12 +13,12 @@ class Coin extends MovableObject {
         'img/img/8_coin/Gold/Gold_30.png'
     ];
 
-    constructor(x){
+    constructor(x,y){
         super().loadImage('img/img/8_coin/Gold/Gold_21.png');
         this.loadImages(this.IMAGES_COIN);
         this.height = 50;
         this.width = 50;
-        this.y = 120;
+        this.y = y;
 
         this.x = x;
 
