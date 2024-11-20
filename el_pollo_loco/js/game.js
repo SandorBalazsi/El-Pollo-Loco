@@ -144,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
  *   - Spacebar: Jump or action.
  */
 window.addEventListener('keydown', (e) => {
-    console.log(e);
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
     }

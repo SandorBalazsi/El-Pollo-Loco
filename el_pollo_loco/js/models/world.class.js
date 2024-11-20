@@ -98,7 +98,6 @@ class World {
         } else if (enemy.dead == false && this.character.speedY === 0)  {
           this.character.hit();
           this.statusBar.setPercentage(this.character.energy);
-          console.log("Collision with Character", this.character.energy);
         }
       }
     });
@@ -176,7 +175,6 @@ class World {
   collectBottle() {
     this.bottleBar.bottleNr++;
     this.bottleBar.setBottleNr(this.bottleBar.bottleNr);
-    console.log("Bottle collected!");
     this.collectedBottle++;
     this.bottleBar.scale = 1;
     if (muteState === 'false') {
