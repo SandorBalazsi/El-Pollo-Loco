@@ -56,7 +56,7 @@ class SmallChicken extends MovableObject {
     clearInterval(this.walkChicken);
     this.loadImage("img/img/3_enemies_chicken/chicken_small/2_dead/dead.png");
     this.dead = true;
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.small_chicken_dead_sound.play();
     }
   }

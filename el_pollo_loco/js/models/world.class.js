@@ -95,7 +95,7 @@ class World {
         if (this.character.speedY < 0 && enemy.dead == false) {
           this.character.jump();
           enemy.chickenDead();
-        } else if (enemy.dead == false) {
+        } else if (enemy.dead == false && this.character.speedY === 0)  {
           this.character.hit();
           this.statusBar.setPercentage(this.character.energy);
           console.log("Collision with Character", this.character.energy);
@@ -150,7 +150,7 @@ class World {
   collectCoin() {
     this.coinBar.coinNr++;
     this.coinBar.setCoinNr(this.coinBar.coinNr);
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.collect_sound.play();
     }
   }
@@ -179,7 +179,7 @@ class World {
     console.log("Bottle collected!");
     this.collectedBottle++;
     this.bottleBar.scale = 1;
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.collect_bottle_sound.play();
     }
   }

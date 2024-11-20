@@ -2,17 +2,32 @@ let canvas;
 let world;
 let keyboard = new Keyboard;
 let background_music = new Audio('audio/background_music.mp3');
-soundOn = false;
+let muteState = localStorage.getItem('muted') || 'false';
 
+/**
+ * Redirects the user to the main menu by navigating to 'index.html'.
+ */
 function returnToMainMenu() {
     window.location.href = 'index.html';
 }
 
+/**
+ * Initializes the game world by connecting the canvas, keyboard, and level.
+ * 
+ * - Retrieves the canvas element by ID.
+ * - Creates a new `World` object using the canvas, keyboard, and level1.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
 }
 
+/**
+ * Detects changes in screen orientation and adjusts the UI accordingly.
+ * 
+ * - On portrait mode: Displays a dialog (`screen_dialog`) prompting the user to switch to landscape.
+ * - On landscape mode: Hides the dialog.
+ */
 screen.orientation.addEventListener("change", () => {
     checkMobileDevice();
 })
@@ -27,6 +42,11 @@ window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
     }
 });
 
+/**
+ * Determines if the current device is a mobile device.
+ * 
+ * - Uses `navigator.maxTouchPoints` and user agent strings to check for mobile characteristics.
+ */
 function isMobile() {
     return navigator.maxTouchPoints > 0 && /Android|iPhone|iPad/i.test(navigator.userAgent);
 }
@@ -39,6 +59,12 @@ function checkMobileDevice() {
     }
 }
 
+/**
+ * Adjusts the main menu UI for mobile devices.
+ * 
+ * - Shows menu icons.
+ * - Hides the logo, title, main menu buttons, and mute button.
+ */
 function changeToMobile(){
     document.getElementById("menu_icons").classList.remove('d-none');
     document.getElementById("logo").classList.add("d-none");
@@ -47,6 +73,12 @@ function changeToMobile(){
     document.getElementById("main_menu_mute").classList.add('d-none');
 }
 
+/**
+ * Reverts the main menu UI back to the desktop layout.
+ * 
+ * - Hides menu icons.
+ * - Shows the logo, title, main menu buttons, and mute button.
+ */
 function changeBackFromMobile(){
     document.getElementById("menu_icons").classList.add('d-none');
     document.getElementById("title").classList.remove('d-none')
@@ -55,6 +87,13 @@ function changeBackFromMobile(){
     document.getElementById("main_menu_mute").classList.remove('d-none');
 }
 
+/**
+ * Sets up event listeners for mobile controls and initializes the game.
+ * 
+ * - Binds touch events for mobile control buttons (left, right, jump, throw).
+ * - Connects the home button to return to the main menu.
+ * - Updates the `keyboard` object based on user interactions.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     let mobileLeft = document.getElementById("mobileLeft");
     let mobileRight = document.getElementById("mobileRight");
@@ -62,9 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let mobileThrow = document.getElementById("mobileThrow");
     let homeButton = document.getElementById("homeButton");
 
+     // Navigate to the main menu when the home button is clicked.
     homeButton.addEventListener('click', () => {
         returnToMainMenu();
     })
+
+    // Touchstart events to enable corresponding keyboard keys for mobile controls.
     mobileLeft.addEventListener('touchstart', () => {
         keyboard.LEFT = true;
     });
@@ -78,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         keyboard.SPACE = true;
     });
 
+    // Touchend events to disable corresponding keyboard keys for mobile controls.
     mobileLeft.addEventListener('touchend', () => {
         keyboard.LEFT = false;
     });
@@ -93,6 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })
 
+/**
+ * Listens for keydown events and updates the `keyboard` object.
+ * 
+ * - Maps specific key codes to control actions:
+ *   - Arrow keys: Movement (UP, DOWN, LEFT, RIGHT).
+ *   - Spacebar: Jump or action.
+ */
 window.addEventListener('keydown', (e) => {
     console.log(e);
     if (e.keyCode == 39) {
@@ -115,6 +165,12 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+/**
+ * Listens for keyup events and updates the `keyboard` object.
+ * 
+ * - Resets the corresponding key's state to `false` when the key is released.
+ * - Special handling for SPACE to enable throwing after release.
+ */
 window.addEventListener('keyup', (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = false;
@@ -250,8 +306,8 @@ function clearAllIntervals() {
  * Calls the `checkOnMusic` function to ensure proper music playback.
  */
 function startMusic() {
-    soundOn = true;
-    background_music.muted = false;
+    localStorage.setItem('muted', 'false');
+    muteState = 'false';
     checkOnMusic();
 }
 
@@ -260,8 +316,9 @@ function startMusic() {
  * Also updates the UI button states based on whether music is enabled.
  */
 function checkOnMusic() {
-    if (soundOn === true) {
-        background_music.autoplay;
+    if (muteState === 'false') {
+        background_music.muted = false;
+        background_music.autoplay = true;
         background_music.loop = true;
         background_music.play();
         changeAudioButtonOn();
@@ -271,10 +328,11 @@ function checkOnMusic() {
 }
 
 /**
- * Stops the background music and sets the `soundOn` flag to false.
+ * Stops the background music and sets the `muteState` flag to true.
  */
 function stopMusic() {
-    soundOn = false;
+    localStorage.setItem('muted', 'true');
+    muteState = 'true';
 }
 
 /**

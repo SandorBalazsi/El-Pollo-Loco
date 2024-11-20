@@ -151,7 +151,7 @@ class Character extends MovableObject {
   characterSleepOrIdle() {
     if (this.seconds <= 0) {
       this.playAnimation(this.IMAGES_SLEEPING);
-      if (soundOn == true) {
+      if (muteState === 'false') {
         this.sleeping_audio.play();
       }
     } else {
@@ -172,7 +172,7 @@ class Character extends MovableObject {
    */
   characterHurt() {
     this.playAnimation(this.IMAGES_HURT);
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.hit_audio.play();
     }
     this.seconds = 15;
@@ -217,7 +217,7 @@ class Character extends MovableObject {
   characterMovesLeft() {
     this.moveLeft();
     this.otherDirection = true;
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.walking_audio.play();
     }
     this.seconds = 15;
@@ -229,7 +229,7 @@ class Character extends MovableObject {
   characterMovesRight() {
     this.moveRight();
     this.otherDirection = false;
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.walking_audio.play();
     }
     this.seconds = 15;
@@ -240,7 +240,7 @@ class Character extends MovableObject {
    */
   characterJumps() {
     this.jump();
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.jump_audio.play();
     }
     this.seconds = 15;

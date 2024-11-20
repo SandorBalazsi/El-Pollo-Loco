@@ -96,7 +96,7 @@ class Endboss extends MovableObject {
       this.i = 0;
       this.isAlerted = true;
       this.canWalk = true;
-      if (soundOn === true) {
+      if (muteState === 'false') {
         this.action_music.play();
       }
     }
@@ -164,7 +164,7 @@ class Endboss extends MovableObject {
         this.canWalk = false;
         this.isHurt = true;
         this.lastHit = new Date().getTime();
-        if (soundOn == true) {
+        if (muteState === 'false') {
           this.hit_audio.play();
         }
         setTimeout(() => {
@@ -181,6 +181,6 @@ class Endboss extends MovableObject {
    */
   endBossIsHurt() {
     let timePassed = (new Date().getTime() - this.lastHit) / 1000;
-    return timePassed < 1;
+    return timePassed < 0.15;
   }
 }

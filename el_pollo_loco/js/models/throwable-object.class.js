@@ -82,7 +82,7 @@ class ThrowableObject extends MovableObject {
     this.y = 380;
     this.speedY = 0;
     this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
-    if (soundOn == true) {
+    if (muteState === 'false') {
       this.bottle_break_sound.play();
     }
     clearInterval(this.throwInterval);
