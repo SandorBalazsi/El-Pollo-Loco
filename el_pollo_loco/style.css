@@ -226,6 +226,7 @@ canvas {
 
 .canvas-overlay {
   position: relative;
+  overflow: hidden;
 }
 
 .menu_icons div {
@@ -341,7 +342,6 @@ canvas {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .buttons {
