@@ -51,6 +51,13 @@ function isMobile() {
     return navigator.maxTouchPoints > 0 && /Android|iPhone|iPad/i.test(navigator.userAgent);
 }
 
+/**
+ * Checks if the current device is a mobile device and updates the UI accordingly.
+ * 
+ * - Calls `isMobile()` to determine the type of device.
+ * - If the device is mobile, switches to a mobile-friendly UI using `changeToMobile()`.
+ * - If the device is not mobile, restores the desktop UI using `changeBackFromMobile()`.
+ */
 function checkMobileDevice() {
     if (this.isMobile()) {
        changeToMobile();

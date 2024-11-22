@@ -160,7 +160,7 @@ class World {
    */
   checkCollisionWithBottle() {
     this.level.bottle = this.level.bottle.filter((bottle) => {
-      if (this.character.isColliding(bottle) && this.bottleBar.bottleNr < 10) {
+      if (this.character.isColliding(bottle) && this.bottleBar.bottleNr <= 10) {
         this.canThrow = true;
         this.collectBottle(bottle);
         return false; // Bottle entfernen
@@ -193,7 +193,7 @@ class World {
         this.character.x + 100,
         this.character.y + 100
       );
-      this.throwableObjects.push(bottle);
+      this.throwableObjects.push(bottle); 
       this.bottleBar.bottleNr--;
       this.bottleBar.setBottleNr(this.bottleBar.bottleNr);
       this.canThrow = false;

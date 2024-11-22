@@ -342,6 +342,7 @@ canvas {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .buttons {
@@ -506,6 +507,14 @@ button:focus:not(:focus-visible) {
   .main-picture {
     width: 100%;
   }
+
+
+}
+
+@media all and (orientation: portrait) {
+  .endgame-dialog-bg{
+    display: none !important;
+  }
 }
 
 @media only screen and (max-height: 480px) {
@@ -566,6 +575,10 @@ button:focus:not(:focus-visible) {
   .controls_line span {
     height: 30px;
     font-size: 1rem;
+  }
+
+  .screen-dialog-bg{
+    display: flex;
   }
 }
 

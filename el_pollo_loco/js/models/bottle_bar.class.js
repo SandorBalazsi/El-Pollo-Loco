@@ -34,7 +34,7 @@ class BottleBar extends DrawableObject {
   resolveImageIndex() {
     if (this.bottleNr == 10) {
       return 10;
-    } else if (this.bottlenNr == 9) {
+    } else if (this.bottleNr == 9) {
       return 9;
     } else if (this.bottleNr == 8) {
       return 8;
